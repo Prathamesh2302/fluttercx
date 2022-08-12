@@ -12,6 +12,8 @@ app.get('/', (req, res) => {
 });
 app.post("/getResponse", express.json(), (req, res) => {
     console.log(req);
+    res.status(200).send({});
+
 });
 
 
