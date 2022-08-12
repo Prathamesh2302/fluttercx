@@ -15,6 +15,7 @@ app.get('/', (req, res) => {
 });
 app.post("/getResponse", express.json(), (req, res) => {
     var query = req.body.title;
+    console.log(query);
     languageCode = "en";
     const { SessionsClient } = require('@google-cloud/dialogflow-cx');
     const client = new SessionsClient({ apiEndpoint: 'us-central1-dialogflow.googleapis.com' })
@@ -31,7 +32,6 @@ app.post("/getResponse", express.json(), (req, res) => {
             session: sessionPath,
             queryInput: {
                 text: {
-                    languageCode,
                     text: query,
 
                 },
