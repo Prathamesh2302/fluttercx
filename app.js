@@ -20,24 +20,25 @@ app.post("/getResponse", express.json(), (req, res) => {
     const { SessionsClient } = require('@google-cloud/dialogflow-cx');
     const client = new SessionsClient({ apiEndpoint: 'us-central1-dialogflow.googleapis.com' })
 
-    async function detectIntentText() {
-        const sessionId = Math.random().toString(36).substring(7);
-        const sessionPath = client.projectLocationAgentSessionPath(
-            process.env.projectId,
-            process.env.location,
-            process.env.agentId,
-            sessionId
-        );
-        const request = {
-            session: sessionPath,
-            queryInput: {
-                text: {
-                    text: query,
+    const sessionId = Math.random().toString(36).substring(7);
+    const sessionPath = client.projectLocationAgentSessionPath(
+        process.env.projectId,
+        process.env.location,
+        process.env.agentId,
+        sessionId
+    );
+    const request = {
+        session: sessionPath,
+        queryInput: {
+            text: {
+                text: query,
 
-                },
-                languageCode,
             },
-        };
+            languageCode,
+        },
+    };
+    async function detectIntentText() {
+
         const [response] = await client.detectIntent(request);
         var data = "";
         for (const message of response.queryResult.responseMessages) {
@@ -47,11 +48,13 @@ app.post("/getResponse", express.json(), (req, res) => {
             }
         }
         console.log(data);
-        res.status(200).send(data);
+        return data;
 
     }
 
-    detectIntentText();
+    var resData = detectIntentText();
+    res.status(200).send(resData);
+
 
 
 });
