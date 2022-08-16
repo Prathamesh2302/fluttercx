@@ -60,7 +60,7 @@ app.post("/getResponse", express.json(), (req, res) => {
 });
 
 
-
+//port
 app.listen(port, () => {
     console.log(`App listening on port ${port}`);
 });
